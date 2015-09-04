@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Magias</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_luz_baixa">Luz Baixa</string>
+    <string name="btn_mic">Microfone</string>
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+</resources>
