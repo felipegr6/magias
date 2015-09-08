@@ -2,7 +2,8 @@
     <string name="app_name">Hogwarts</string>
 
     <string name="action_settings">Settings</string>
-    <string name="btn_luz_baixa">Luz Baixa</string>
+    <string name="btn_acender_luz">Acender</string>
+    <string name="btn_apagar_luz">Apagar</string>
     <string name="btn_mic">Microfone</string>
     <string name="speech_prompt">Profira o encantamento&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>

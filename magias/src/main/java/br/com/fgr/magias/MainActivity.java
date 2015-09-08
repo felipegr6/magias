@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
     private ControlCamera controlCamera;
+
+    @Bind(R.id.btn_luz_baixa) Button btnLuz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +115,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (controlCamera.verifyCamera()) {
 
-            if (!controlCamera.isFlashOn())
+            if (!controlCamera.isFlashOn()) {
+
                 controlCamera.lightOn();
-            else
+                btnLuz.setText(getText(R.string.btn_apagar_luz));
+
+            } else {
+
                 controlCamera.lightOff();
+                btnLuz.setText(getText(R.string.btn_acender_luz));
+
+            }
 
         } else
             Toast.makeText(this, "Não foi possível ligar o flash.", Toast.LENGTH_SHORT).show();
