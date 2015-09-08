@@ -6,6 +6,9 @@ import android.hardware.Camera;
 
 public class ControlCamera {
 
+    public static final String LUMUS = "lumus";
+    public static final String NOX = "nox";
+
     private boolean flashOn = false;
 
     private Camera cam;
@@ -57,7 +60,7 @@ public class ControlCamera {
 
     }
 
-    public boolean isFlashOn(){
+    public boolean isFlashOn() {
         return this.flashOn;
     }
 
