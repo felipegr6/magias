@@ -2,10 +2,7 @@ package br.com.fgr.magias;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -20,10 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
-    private boolean flashLigado = false;
-
-    private Camera cam;
-    private Camera.Parameters param;
+    private ControlCamera controlCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +27,25 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-    }
-
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-
-        cam = Camera.open();
-        param = cam.getParameters();
+        controlCamera = new ControlCamera(this);
 
     }
 
     @Override
-    protected void onPause() {
+    protected void onStart() {
 
-        super.onPause();
+        super.onStart();
 
-        cam.stopPreview();
-        cam.release();
+        controlCamera.openCamera();
+
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+
+        controlCamera.closeCamera();
 
     }
 
@@ -66,21 +60,22 @@ public class MainActivity extends AppCompatActivity {
 
                 if (resultCode == RESULT_OK && null != data) {
 
+                    String recognizedVoice;
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    Toast.makeText(this, result.get(0), Toast.LENGTH_SHORT)
+
+                    recognizedVoice = result.get(0).toLowerCase();
+                    Toast.makeText(this, recognizedVoice, Toast.LENGTH_SHORT)
                             .show();
 
-                    if (result.get(0).toLowerCase().equals("lumus")) {
+                    switch (recognizedVoice) {
 
-                        new Handler().postDelayed(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                luz();
-                            }
-
-                        }, 1000);
+                        case "lumus":
+                            controlCamera.lightOn();
+                            break;
+                        case "nox":
+                            controlCamera.lightOff();
+                            break;
 
                     }
 
@@ -113,33 +108,16 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btn_luz_baixa)
     void luz() {
 
-        if (verificarFlash()) {
+        if (controlCamera.verifyCamera()) {
 
-            String modo;
-
-            if (!flashLigado) {
-
-                modo = Camera.Parameters.FLASH_MODE_TORCH;
-                flashLigado = true;
-
-            } else {
-
-                modo = Camera.Parameters.FLASH_MODE_OFF;
-                flashLigado = false;
-
-            }
-
-            param.setFlashMode(modo);
-            cam.setParameters(param);
-            cam.startPreview();
+            if (!controlCamera.isFlashOn())
+                controlCamera.lightOn();
+            else
+                controlCamera.lightOff();
 
         } else
             Toast.makeText(this, "Não foi possível ligar o flash.", Toast.LENGTH_SHORT).show();
 
-    }
-
-    private boolean verificarFlash() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
 }
