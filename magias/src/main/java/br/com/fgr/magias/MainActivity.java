@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else
-            Toast.makeText(this, "Não foi possível ligar o flash.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.msg_flash_nao_ligou, Toast.LENGTH_SHORT).show();
 
     }
 

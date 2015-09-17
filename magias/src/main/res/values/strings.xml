@@ -7,4 +7,5 @@
     <string name="btn_mic">Microfone</string>
     <string name="speech_prompt">Profira o encantamento&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="msg_flash_nao_ligou">Não foi possível ligar o flash.</string>
 </resources>
