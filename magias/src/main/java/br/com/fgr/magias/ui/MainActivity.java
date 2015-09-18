@@ -1,4 +1,4 @@
-package br.com.fgr.magias;
+package br.com.fgr.magias.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,8 +9,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
+import br.com.fgr.magias.R;
+import br.com.fgr.magias.dao.Acender;
+import br.com.fgr.magias.dao.DaoService;
+import br.com.fgr.magias.dao.DaoServiceImpl;
+import br.com.fgr.magias.dao.Gravavel;
+import br.com.fgr.magias.model.ControlCamera;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,8 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
     private ControlCamera controlCamera;
+    private DaoService dao;
+    private Gravavel acender;
 
-    @Bind(R.id.btn_luz_baixa) Button btnLuz;
+    @Bind(R.id.btn_luz_baixa)
+    Button btnLuz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         controlCamera = new ControlCamera(this);
+        dao = new DaoServiceImpl();
+
 
     }
 
@@ -64,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (resultCode == RESULT_OK && null != data) {
 
+                    DaoService dao = new DaoServiceImpl();
                     String recognizedVoice;
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -76,9 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
                         case ControlCamera.LUMUS:
                             controlCamera.lightOn();
+                            acender = new Acender(ControlCamera.LUMUS, (new Date()).toString());
+                            dao.create(acender);
                             break;
                         case ControlCamera.NOX:
                             controlCamera.lightOff();
+                            acender = new Acender(ControlCamera.NOX, (new Date()).toString());
+                            dao.create(acender);
                             break;
 
                     }
@@ -119,11 +136,15 @@ public class MainActivity extends AppCompatActivity {
 
                 controlCamera.lightOn();
                 btnLuz.setText(getText(R.string.btn_apagar_luz));
+                acender = new Acender(ControlCamera.LUMUS, (new Date()).toString());
+                dao.create(acender);
 
             } else {
 
                 controlCamera.lightOff();
                 btnLuz.setText(getText(R.string.btn_acender_luz));
+                acender = new Acender(ControlCamera.LUMUS, (new Date()).toString());
+                dao.create(acender);
 
             }
 

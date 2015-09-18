@@ -1,4 +1,4 @@
-package br.com.fgr.magias;
+package br.com.fgr.magias.model;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
