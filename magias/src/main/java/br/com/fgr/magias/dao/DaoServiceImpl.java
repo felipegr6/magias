@@ -10,7 +10,7 @@ public class DaoServiceImpl implements DaoService {
     private Firebase ref;
 
     public DaoServiceImpl() {
-        ref = new Firebase("https://fiery-inferno-4161.firebaseapp.com");
+        ref = new Firebase("https://fiery-inferno-4161.firebaseio.com/");
     }
 
     @Override
@@ -21,7 +21,10 @@ public class DaoServiceImpl implements DaoService {
 
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                Log.e("Firebase", firebaseError.getMessage() + "");
+
+                if (firebaseError != null)
+                    Log.e("Firebase", firebaseError.getMessage() + "");
+
             }
 
         });

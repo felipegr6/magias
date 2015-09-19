@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 controlCamera.lightOff();
                 btnLuz.setText(getText(R.string.btn_acender_luz));
-                acender = new Acender(ControlCamera.LUMUS, (new Date()).toString());
+                acender = new Acender(ControlCamera.NOX, (new Date()).toString());
                 dao.create(acender);
 
             }
