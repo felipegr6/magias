@@ -26,4 +26,14 @@
         android:gravity="center"
         android:text="@string/btn_mic" />
 
+    <TextView
+        android:id="@+id/lbl_uid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="255" />
+
 </RelativeLayout>

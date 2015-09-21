@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import br.com.fgr.magias.dao.Acender;
 import br.com.fgr.magias.dao.DaoService;
 import br.com.fgr.magias.dao.DaoServiceImpl;
 import br.com.fgr.magias.dao.Gravavel;
+import br.com.fgr.magias.dao.InternalDaoImpl;
 import br.com.fgr.magias.model.ControlCamera;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,13 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
     private ControlCamera controlCamera;
     private DaoService dao;
+    private DaoService internalDao;
     private Gravavel acender;
 
     @Bind(R.id.btn_luz_baixa)
     Button btnLuz;
+    @Bind(R.id.lbl_uid)
+    TextView lblUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        String uid;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -42,8 +49,21 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         controlCamera = new ControlCamera(this);
-        dao = new DaoServiceImpl();
+        internalDao = new InternalDaoImpl(getApplicationContext());
 
+        if (getIntent().getExtras() != null) {
+
+            uid = getIntent().getExtras().getString("UID", "");
+            dao = new DaoServiceImpl(uid);
+
+        } else {
+
+            uid = internalDao.read().getMap().get("uid");
+            dao = new DaoServiceImpl(uid);
+
+        }
+
+        lblUID.setText(uid);
 
     }
 
@@ -76,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if (resultCode == RESULT_OK && null != data) {
 
-                    DaoService dao = new DaoServiceImpl();
                     String recognizedVoice;
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -108,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_mic)
     void microfone() {
 
@@ -127,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_luz_baixa)
     void luz() {
 

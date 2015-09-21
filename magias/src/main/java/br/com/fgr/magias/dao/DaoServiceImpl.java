@@ -1,5 +1,6 @@
 package br.com.fgr.magias.dao;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.firebase.client.Firebase;
@@ -9,21 +10,20 @@ public class DaoServiceImpl implements DaoService {
 
     private Firebase ref;
 
-    public DaoServiceImpl() {
-        ref = new Firebase("https://fiery-inferno-4161.firebaseio.com/");
+    public DaoServiceImpl(@NonNull String uid) {
+        ref = new Firebase("https://fiery-inferno-4161.firebaseio.com/").child(uid);
     }
 
     @Override
     public boolean create(Gravavel gravavel) {
 
-        ref.child(gravavel.tipoClasse());
-        ref.push().setValue(gravavel.getMap(), new Firebase.CompletionListener() {
+        ref.setValue(gravavel.getMap(), new Firebase.CompletionListener() {
 
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
 
                 if (firebaseError != null)
-                    Log.e("Firebase", firebaseError.getMessage() + "");
+                    Log.e("Firebase", firebaseError.getMessage());
 
             }
 
@@ -34,18 +34,18 @@ public class DaoServiceImpl implements DaoService {
     }
 
     @Override
-    public void read() {
-
+    public Gravavel read() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void update() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete() {
-
+        throw new UnsupportedOperationException();
     }
 
 }

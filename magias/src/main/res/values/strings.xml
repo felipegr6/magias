@@ -8,4 +8,7 @@
     <string name="speech_prompt">Profira o encantamento&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="msg_flash_nao_ligou">Não foi possível ligar o flash.</string>
+    <string name="title_activity_uid">UIDActivity</string>
+    <string name="lbl_id_msg">Digite o ID da conexão</string>
+    <string name="btn_confirmar">Confirmar</string>
 </resources>

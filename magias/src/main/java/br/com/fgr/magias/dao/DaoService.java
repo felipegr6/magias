@@ -4,7 +4,7 @@ public interface DaoService {
 
     boolean create(Gravavel gravavel);
 
-    void read();
+    Gravavel read();
 
     void update();
 

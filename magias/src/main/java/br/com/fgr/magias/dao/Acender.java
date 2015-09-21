@@ -8,6 +8,11 @@ public class Acender implements Gravavel {
     private String comando;
     private String data;
 
+    @SuppressWarnings("unused")
+    private Acender() {
+
+    }
+
     public Acender(String comando, String data) {
         this.comando = comando;
         this.data = data;
