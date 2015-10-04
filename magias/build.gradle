@@ -22,10 +22,10 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    dexOptions {
+        incremental true
+    }
 }
-
-
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
